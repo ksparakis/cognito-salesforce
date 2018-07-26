@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cognito OIDC Sample</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.16.min.js"></script>
+</head>
+<body onload="callback()">
+    <h2>Sample App - Amazon Cognito and OpenID Connect</h2>
+    <p>Results after authentication with Salesforce:</p>
+    <p>
+        <span id="results" style="color:#FF0000"></span>
+    </p>
+</body>
+<script type="text/javascript">          
+    // Callback function called on page load 
+    function callback() {
+        // Capture the redirected URL
+        var url = window.location.href;
+
+        // Check if there was an error parameter
+        var error = url.match('error=([^&]*)')
+        if (error) {
+            // If so, extract the error description and display it
+            var description = url.match('error_description=([^&]*)')
+            printMessage('Error: ' + error[1] + '<br>Description: ' + description[1] + '</br>');
+            return;
+        }
+
+        // Extract id token from the id_token parameter
+        var match = url.match('id_token=([^&]*)');
+        if (match) {
+            var id_token = match[1]; // String captured by ([^&]*)
+
+            // Make AWS request using the id token
+            if (id_token) {
+                printMessage('<span style="color:#000000">Using id token from Salesforce to query DynamoDB . . .</span>');
+                makeCognitoRequest(id_token);
+            }else{
+                printMessage('Error: Could not retrieve id token from the URL');
+            }
+        }else{
+            printMessage('Error: There was no id token in the URL');
+        }
+    }
+
+    // Make AWS request using Cognito
+    function makeCognitoRequest(id_token) {
+        var aws_region = 'us-east-1';
+        var provider_url = 'login.salesforce.com'; 
+        var logins = {};
+        logins[provider_url] = id_token;
+        
+        // **** REPLACE pool_id and table_name WITH YOUR OWN VALUES ****
+        var pool_id = 'arn:aws:cognito-identity:us-east-1:272119801063:identitypool/us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
+        var table_name = 'ProductCatalog';
+        
+        // Parameters required for CognitoIdentityCredentials
+        var params = {
+            IdentityPoolId: pool_id,
+            Logins: logins
+        };
+
+        // Amazon Cognito region
+        AWS.config.region = aws_region;
+
+        // Initialize CognitoIdentityCredentials
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
+
+        // Cognito credentials 
+        AWS.config.credentials.get(function (err) {
+            if (err) {  // an error occurred
+                printMessage(err);
+            }else{      // successful response
+
+                // DynamoDB client will automatically use the Cognito identity credentials provider
+                var ddb = new AWS.DynamoDB();
+                
+                // Scan the table
+                ddb.scan({TableName: table_name}, function (err, data) {
+                    if (err){   // an error occurred
+                        printMessage(err);   
+                    }else{      // successful response
+                        
+                        // Print the items
+                        var items = '';
+                        for (i = 0; i < data.Count; i++) {
+                            items += data.Items[i].Id.N + ' ';
+                        }    
+                        printMessage('<span style="color:#000000">Items found:</span>'  + items);                
+                    }
+                });
+            }
+        });      
+    }
+
+    // Print messages  
+    function printMessage(messageString){
+       document.getElementById("results").innerHTML = messageString;
+    }    
+</script>
+</html>

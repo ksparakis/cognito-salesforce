@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cognito OIDC Sample</title>
+</head>
+<body>
+    <h2>Sample App - Amazon Cognito and OpenID Connect</h2>
+    <p>
+    This sample demonstrates how you can use <a href="http://aws.amazon.com/cognito/" target="_blank">Amazon Cognito</a> to build a web app that allows users to sign in using their Salesforce user names and passwords and enables them to access data stored in an <a href="http://aws.amazon.com/dynamodb/" target="_blank"> Amazon DynamoDB</a> table. The app is written entirely in JavaScript and contains only two files - <b>index.html</b> (this file) and <b>callback.html</b>.
+    </p>  
+    <p>
+    For more details including a step-by-step tutorial, check our OpenID Connect announcement <a href="http://blogs.aws.amazon.com/security/post/Tx3LP54JOGBE0AY/Building-an-App-using-Amazon-Cognito-and-an-OpenID-Connect-Identity-Provider" target="_blank">blog post</a>.
+    </p>
+    <p>
+     To get started, click <b>Sign In with Salesforce</b> button. If you authenticate successfully, the app will list the items from a DynamoDB table.
+    </p>
+
+    <button onclick="login()">Sign In with Salesforce</button>   
+</body>
+<script type="text/javascript">
+
+function login() {
+    // Consumer key for the connected app created in Salesforce
+    // **** REPLACE WITH YOUR OWN CONSUMER KEY ****
+    var client_id = '3MVG9oNqAtcJCF.GdcJyo3ISkkIDVr5O3.Xv3.iYSJ4OphRM_.dkkF18BODTzJxpOZ9dvyBwb.E58eiB2OpUu';
+    var secret = '8779521774914533570';
+    // Callback URL (must be HTTPS) configured for the connected app      
+    var redirect_uri = 'https://localhost/callback.html';
+    
+    // Construct the redirect URL
+    // For getting an id token, response_type of 
+    // "token id_token" (note the space), scope of 
+    // "openid", and some value for nonce is required.
+    // client_id must be the consumer key of the connected app.
+    // redirect_uri must match the callback URL configured for 
+    // the connected app.
+    var url = 
+        'https://login.salesforce.com/services/oauth3/authorize'
+        + '?response_type=token id_token'
+        + '&scope=openid'
+        + '&nonce=abc'
+        + '&client_id=' + client_id 
+        + '&redirect_uri=' + redirect_uri;
+
+    // Redirect the user to Salesforce
+    window.location.replace(url);
+}
+
+</script>
+</html>
