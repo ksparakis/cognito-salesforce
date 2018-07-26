@@ -41,9 +41,14 @@ function login() {
         + '&nonce=abc'
         + '&client_id=' + client_id 
         + '&redirect_uri=' + redirect_uri;
+    
+    var url2 = 'https://login.salesforce.com/services/oauth2/authorize'
+     + '?response_type=token&client_id='+ client_id 
+     + '&redirect_uri='+ redirect_uri
+     + '&scope=openid'
 
     // Redirect the user to Salesforce
-    window.location.replace(url);
+    window.location.replace(url2);
 }
 
 </script>
