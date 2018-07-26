@@ -17,6 +17,7 @@
         // Capture the redirected URL
         var url = window.location.href;
 
+        
         // Check if there was an error parameter
         var error = url.match('error=([^&]*)')
         if (error) {
@@ -25,7 +26,7 @@
             printMessage('Error: ' + error[1] + '<br>Description: ' + description[1] + '</br>');
             return;
         }
-
+        printMessage(url);
         // Extract id token from the id_token parameter
         var match = url.match('id_token=([^&]*)');
         if (match) {
