@@ -26,9 +26,9 @@
             printMessage('Error: ' + error[1] + '<br>Description: ' + description[1] + '</br>');
             return;
         }
-        printMessage(url);
+      
         // Extract id token from the id_token parameter
-        var match = url.match('id_token=([^&]*)');
+        var match = url.match('access_token=([^&]*)');
         if (match) {
             var id_token = match[1]; // String captured by ([^&]*)
 
