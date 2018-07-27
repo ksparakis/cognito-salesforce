@@ -43,7 +43,7 @@ function login() {
         + '&redirect_uri=' + redirect_uri;
     
     var url2 = 'https://login.salesforce.com/services/oauth2/authorize'
-     + '?response_type=token&client_id='+ client_id 
+     + '?response_type=token+id_token&client_id='+ client_id 
      + '&redirect_uri='+ redirect_uri
      + '&scope=openid'
 
