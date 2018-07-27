@@ -11,6 +11,17 @@
         <span id="results" style="color:#FF0000"></span>
     </p>
 </body>
+<script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+<script type="text/javascript" src="lib/url-template/url-template.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+<script type="text/javascript" src="apigClient.js"></script>
 <script type="text/javascript">          
     // Callback function called on page load 
     function callback() {
@@ -73,6 +84,48 @@
                 printMessage(err);
             }else{      // successful response
 
+
+                    var apigClient = apigClientFactory.newClient();
+                    //var apigClient = apigClientFactory.newClient({
+                    //        apiKey: 'API_KEY'
+                    // });
+
+
+                    var params = {
+                    // This is where any modeled request parameters should be added.
+                    // The key is the parameter name, as it is defined in the API in API Gateway.
+                      param0: ''
+                    };
+
+                    var body = {
+                      // This is where you define the body of the request,
+                    };
+
+                    var additionalParams = {
+                      // If there are any unmodeled query parameters or headers that must be
+                      //   sent with the request, add them here.
+                      headers: {
+                        param0: '',
+                        param1: ''
+                      },
+                      queryParams: {
+                        param0: '',
+                        param1: ''
+                      }
+                    };
+
+                    apigClient.helloworldGet(params, body, additionalParams)
+                        .then(function(result){
+                          // Add success callback code here.
+                          Console.log("SUCCESS")
+                          Console.log(result)
+                        }).catch( function(result){
+                          // Add error callback code here.
+                          Console.log("FAIL")
+                          Console.log(result)
+                        });
+
+                /*
                 // DynamoDB client will automatically use the Cognito identity credentials provider
                 var ddb = new AWS.DynamoDB();
                 
@@ -90,6 +143,7 @@
                         printMessage('<span style="color:#000000">Items found:</span>'  + items);                
                     }
                 });
+                */
             }
         });      
     }
