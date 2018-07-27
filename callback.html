@@ -77,13 +77,13 @@
 
         // Initialize CognitoIdentityCredentials
         AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
-        Console.log("AYOOO")
+        console.log("AYOOO")
         // Cognito credentials 
         AWS.config.credentials.get(function (err) {
             if (err) {  // an error occurred
                 printMessage(err);
             }else{      // successful response
-
+                console.log("we here")
 
                     var apigClient = apigClientFactory.newClient();
                     //var apigClient = apigClientFactory.newClient({
