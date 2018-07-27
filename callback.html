@@ -60,8 +60,8 @@
         console.log(id_token)
         var aws_region = 'us-east-1';
         var provider_url = 'login.salesforce.com'; 
-        var logins = {};
-        var logins = 'login.salesforce.com': id_token;
+
+        var logins = {'login.salesforce.com': id_token};
        
         // **** REPLACE pool_id and table_name WITH YOUR OWN VALUES ****
         var pool_id = 'arn:aws:cognito-identity:us-east-1:272119801063:identitypool/us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
@@ -69,22 +69,15 @@
         
         // Parameters required for CognitoIdentityCredentials
         var params = {
-            IdentityPoolId: pool_id,
+            IdentityPoolId: 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a',
             Logins: logins
         };
 
         // Amazon Cognito region
         AWS.config.region = aws_region;
-
-        // Initialize the Amazon Cognito credentials provider
-        AWS.config.region = 'us-east-1'; // Region
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a',
-            AccountId: 
-        });
         
         // Initialize CognitoIdentityCredentials
-        //AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
         console.log("AYOOO")
         // Cognito credentials 
         AWS.config.credentials.get(function (err) {
