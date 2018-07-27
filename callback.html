@@ -85,6 +85,7 @@
         AWS.config.credentials.get(function (err) {
             if (err) {  // an error occurred
                 printMessage(err);
+                console.log(err)
             }else{      // successful response
                 console.log("we here")
 
