@@ -42,11 +42,12 @@ function login() {
         + '&client_id=' + client_id 
         + '&redirect_uri=' + redirect_uri;
     
+    var nonce = Math.random().toString(36).slice(2)
     var url2 = 'https://login.salesforce.com/services/oauth2/authorize'
      + '?response_type=token+id_token&client_id='+ client_id 
      + '&redirect_uri='+ redirect_uri
      + '&scope=openid'
-     + '&nonce=somevalue'
+     + '&nonce='+ nonce
     
 
     // Redirect the user to Salesforce
