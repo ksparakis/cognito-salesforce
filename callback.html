@@ -69,8 +69,9 @@
         
         // Parameters required for CognitoIdentityCredentials
         var params = {
-            IdentityPoolId: 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a',
-            Logins: logins
+            'IdentityPoolId': 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a',
+            'AccountId': id_token,
+            'Logins': logins
         };
 
         // Amazon Cognito region
