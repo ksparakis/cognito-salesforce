@@ -57,7 +57,6 @@
 
     // Make AWS request using Cognito
     function makeCognitoRequest(id_token) {
-        console.log(id_token)
         var aws_region = 'us-east-1';
         var provider_url = 'login.salesforce.com'; 
 
@@ -80,7 +79,7 @@
         
         // Initialize CognitoIdentityCredentials
         AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
-        console.log("AYOOO")
+        console.log("Completed Setup")
         // Cognito credentials 
         AWS.config.credentials.get(function (err) {
             if (err) {  // an error occurred
