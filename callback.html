@@ -77,7 +77,7 @@
 
         // Initialize CognitoIdentityCredentials
         AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
-
+        Console.log("AYOOO")
         // Cognito credentials 
         AWS.config.credentials.get(function (err) {
             if (err) {  // an error occurred
