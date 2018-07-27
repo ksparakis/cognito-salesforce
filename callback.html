@@ -57,11 +57,12 @@
 
     // Make AWS request using Cognito
     function makeCognitoRequest(id_token) {
+        console.log(id_token)
         var aws_region = 'us-east-1';
         var provider_url = 'login.salesforce.com'; 
         var logins = {};
-        logins[provider_url] = id_token;
-        
+        var logins = 'login.salesforce.com': id_token;
+       
         // **** REPLACE pool_id and table_name WITH YOUR OWN VALUES ****
         var pool_id = 'arn:aws:cognito-identity:us-east-1:272119801063:identitypool/us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
         var table_name = 'ProductCatalog';
@@ -79,6 +80,7 @@
         AWS.config.region = 'us-east-1'; // Region
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a',
+            AccountId: 
         });
         
         // Initialize CognitoIdentityCredentials
