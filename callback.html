@@ -67,20 +67,16 @@
               // privco values
             console.log("privco account")
             pool_id = 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
-            account_id = '272119801063'
         }
         else
         {
             console.log("Koko account")
              //koko values
             pool_id = 'us-east-1:5db5b0e6-92c1-4e55-8c6e-ef5719e7b749';
-            account_id = '013985392033'
         }
-        var table_name = 'ProductCatalog';
+
         
-        // Parameters required for CognitoIdentityCredentials
-        //            'AccountId': account_id,
-        // 'RoleArn': 'arn:aws:iam::272119801063:role/salesforce_login',
+
         var params = {
             'IdentityPoolId': pool_id,
             'Logins': logins
