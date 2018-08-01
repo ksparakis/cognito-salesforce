@@ -39,7 +39,7 @@
         }
       
         // Extract id token from the id_token parameter
-        var match = url.match('id_token=([^&]*)');
+        var match = url.match('access_token=([^&]*)');
         if (match) {
             var id_token = match[1]; // String captured by ([^&]*)
 
@@ -59,34 +59,47 @@
     function makeCognitoRequest(id_token) {
         var aws_region = 'us-east-1';
         var provider_url = 'login.salesforce.com'; 
+        var logins = {};
+        logins[provider_url] = id_token;
+        
 
-        var logins = {'login.salesforce.com': id_token};
-       
-        // **** REPLACE pool_id and table_name WITH YOUR OWN VALUES ****
-        var pool_id = 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
+        pid = 0
+        pool_id = ""
+
+        if (pid = 1){
+              // privco values
+            pool_id = 'arn:aws:cognito-identity:us-east-1:272119801063:identitypool/us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
+        }
+        else
+        {
+             //koko values
+            pool_id = 'us-east-1:5db5b0e6-92c1-4e55-8c6e-ef5719e7b749';
+        }
+      
+
+        
+
+
         var table_name = 'ProductCatalog';
         
         // Parameters required for CognitoIdentityCredentials
         var params = {
-            'IdentityPoolId': pool_id,
-            'AccountId': '272119801063',
-            'RoleArn': 'arn:aws:iam::272119801063:role/salesforce_login',
-            'Logins': logins
+            IdentityPoolId: pool_id,
+            Logins: logins
         };
 
         // Amazon Cognito region
         AWS.config.region = aws_region;
-        
+
         // Initialize CognitoIdentityCredentials
         AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
-        console.log("Completed Setup")
+
         // Cognito credentials 
         AWS.config.credentials.get(function (err) {
             if (err) {  // an error occurred
                 printMessage(err);
-                console.log(err)
             }else{      // successful response
-                console.log("we here")
+
 
                     var apigClient = apigClientFactory.newClient();
                     //var apigClient = apigClientFactory.newClient({
