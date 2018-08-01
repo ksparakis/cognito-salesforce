@@ -79,10 +79,10 @@
         var table_name = 'ProductCatalog';
         
         // Parameters required for CognitoIdentityCredentials
+        //            'AccountId': account_id,
+        // 'RoleArn': 'arn:aws:iam::272119801063:role/salesforce_login',
         var params = {
             'IdentityPoolId': pool_id,
-            'AccountId': account_id,
-            'RoleArn': 'arn:aws:iam::272119801063:role/salesforce_login',
             'Logins': logins
         };
         // Amazon Cognito region
