@@ -94,10 +94,10 @@
                 console.log(err)
             }else{      // successful response
                 console.log("we here")
-                    var apigClient = apigClientFactory.newClient();
-                    //var apigClient = apigClientFactory.newClient({
-                    //        apiKey: 'API_KEY'
-                    // });
+                    var apigClient = apigClientFactory.newClient({
+                        accessKey: AWS.credentials.accessKeyId,
+                        secretKey: AWS.credentials.secretAccessKey,
+                    });
                     var params = {
                     // This is where any modeled request parameters should be added.
                     // The key is the parameter name, as it is defined in the API in API Gateway.
