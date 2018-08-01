@@ -27,7 +27,6 @@
     function callback() {
         // Capture the redirected URL
         var url = window.location.href;
-
         
         // Check if there was an error parameter
         var error = url.match('error=([^&]*)')
@@ -39,10 +38,9 @@
         }
       
         // Extract id token from the id_token parameter
-        var match = url.match('access_token=([^&]*)');
+        var match = url.match('id_token=([^&]*)');
         if (match) {
             var id_token = match[1]; // String captured by ([^&]*)
-
             // Make AWS request using the id token
             if (id_token) {
                 printMessage('<span style="color:#000000">Using id token from Salesforce to query DynamoDB . . .</span>');
@@ -54,69 +52,62 @@
             printMessage('Error: There was no id token in the URL');
         }
     }
-
     // Make AWS request using Cognito
     function makeCognitoRequest(id_token) {
         var aws_region = 'us-east-1';
         var provider_url = 'login.salesforce.com'; 
-        var logins = {};
-        logins[provider_url] = id_token;
+        var logins = {'login.salesforce.com': id_token};
+       
+    
         
-
-        pid = 0
-        pool_id = ""
-
-        if (pid = 1){
+         pid = 0
+        var pool_id = ""
+        var account_id = ""
+        if (pid == 1){
               // privco values
-            pool_id = 'arn:aws:cognito-identity:us-east-1:272119801063:identitypool/us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
+            pool_id = 'us-east-1:f9d2e6ec-bc18-4897-9f99-73e5fb97065a';
+            account_id = '272119801063'
         }
         else
         {
              //koko values
             pool_id = 'us-east-1:5db5b0e6-92c1-4e55-8c6e-ef5719e7b749';
+            account_id = '013985392033'
         }
-      
-
-        
-
-
         var table_name = 'ProductCatalog';
         
         // Parameters required for CognitoIdentityCredentials
         var params = {
-            IdentityPoolId: pool_id,
-            Logins: logins
+            'IdentityPoolId': pool_id,
+            'AccountId': account_id,
+            'RoleArn': 'arn:aws:iam::272119801063:role/salesforce_login',
+            'Logins': logins
         };
-
         // Amazon Cognito region
         AWS.config.region = aws_region;
-
+        
         // Initialize CognitoIdentityCredentials
         AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
-
+        console.log("Completed Setup")
         // Cognito credentials 
         AWS.config.credentials.get(function (err) {
             if (err) {  // an error occurred
                 printMessage(err);
+                console.log(err)
             }else{      // successful response
-
-
+                console.log("we here")
                     var apigClient = apigClientFactory.newClient();
                     //var apigClient = apigClientFactory.newClient({
                     //        apiKey: 'API_KEY'
                     // });
-
-
                     var params = {
                     // This is where any modeled request parameters should be added.
                     // The key is the parameter name, as it is defined in the API in API Gateway.
                       param0: ''
                     };
-
                     var body = {
                       // This is where you define the body of the request,
                     };
-
                     var additionalParams = {
                       // If there are any unmodeled query parameters or headers that must be
                       //   sent with the request, add them here.
@@ -129,7 +120,6 @@
                         param1: ''
                       }
                     };
-
                     apigClient.helloworldGet(params, body, additionalParams)
                         .then(function(result){
                           // Add success callback code here.
@@ -140,30 +130,10 @@
                           Console.log("FAIL")
                           Console.log(result)
                         });
-
-                /*
-                // DynamoDB client will automatically use the Cognito identity credentials provider
-                var ddb = new AWS.DynamoDB();
-                
-                // Scan the table
-                ddb.scan({TableName: table_name}, function (err, data) {
-                    if (err){   // an error occurred
-                        printMessage(err);   
-                    }else{      // successful response
-                        
-                        // Print the items
-                        var items = '';
-                        for (i = 0; i < data.Count; i++) {
-                            items += data.Items[i].Id.N + ' ';
-                        }    
-                        printMessage('<span style="color:#000000">Items found:</span>'  + items);                
-                    }
-                });
-                */
+               
             }
         });      
     }
-
     // Print messages  
     function printMessage(messageString){
        document.getElementById("results").innerHTML = messageString;
