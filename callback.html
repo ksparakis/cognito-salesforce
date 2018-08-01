@@ -97,8 +97,8 @@
                 console.log("A KEY: "+  AWS.credentials.accessKeyId)
                 console.log("S KEY: "+  AWS.credentials.secretAccessKey)
                     var apigClient = apigClientFactory.newClient({
-                        accessKey: AWS.credentials.accessKeyId,
-                        secretKey: AWS.credentials.secretAccessKey,
+                        accessKey: AWS.config.credentials.accessKeyId,
+                        secretKey: AWS.config.credentials.secretAccessKey,
                     });
                     var params = {
                     // This is where any modeled request parameters should be added.
