@@ -94,6 +94,8 @@
                 console.log(err)
             }else{      // successful response
                 console.log("we here")
+                console.log("A KEY: "+  AWS.credentials.accessKeyId)
+                console.log("S KEY: "+  AWS.credentials.secretAccessKey)
                     var apigClient = apigClientFactory.newClient({
                         accessKey: AWS.credentials.accessKeyId,
                         secretKey: AWS.credentials.secretAccessKey,
