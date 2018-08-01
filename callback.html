@@ -60,7 +60,7 @@
        
     
         
-        var pid = 0
+        var pid = 1
         var pool_id = ""
         var account_id = ""
         if (pid == 1){
@@ -121,12 +121,12 @@
                     apigClient.helloworldGet(params, body, additionalParams)
                         .then(function(result){
                           // Add success callback code here.
-                          Console.log("SUCCESS")
-                          Console.log(result)
+                          console.log("SUCCESS")
+                          console.log(result)
                         }).catch( function(result){
                           // Add error callback code here.
-                          Console.log("FAIL")
-                          Console.log(result)
+                          console.log("FAIL")
+                          console.log(result)
                         });
                
             }
