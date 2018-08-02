@@ -97,9 +97,12 @@
                 console.log("we here")
                 console.log("A KEY: "+  AWS.config.credentials.accessKeyId)
                 console.log("S KEY: "+  AWS.config.credentials.secretAccessKey)
+                console.log("SESSION TOKEN: "+ AWS.config.credentials.sessionToken)
                     var apigClient = apigClientFactory.newClient({
-                        accessKey: AWS.config.credentials.accessKeyId,
-                        secretKey: AWS.config.credentials.secretAccessKey,
+                        // Credentials will be available when this function is called.
+                        var accessKeyId = AWS.config.credentials.accessKeyId;
+                        var secretAccessKey = AWS.config.credentials.secretAccessKey;
+                        var sessionToken = AWS.config.credentials.sessionToken;
                     });
                     var params = {
                     // This is where any modeled request parameters should be added.
