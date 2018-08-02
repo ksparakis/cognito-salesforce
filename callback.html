@@ -79,7 +79,8 @@
 
         var params = {
             'IdentityPoolId': pool_id,
-            'Logins': logins
+            'Logins': logins,
+            'RoleArn': 'arn:aws:iam::272119801063:role/salesforce_login'
         };
         // Amazon Cognito region
         AWS.config.region = aws_region;
