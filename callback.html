@@ -36,7 +36,25 @@
             printMessage('Error: ' + error[1] + '<br>Description: ' + description[1] + '</br>');
             return;
         }
-      
+        
+        var access_token =""
+        //Extract acess token
+        var match = url.match('access_token=([^&]*)');
+        if (match) {
+            access_token = match[1]; // String captured by ([^&]*)
+            // Make AWS request using the id token
+            if (id_token) {
+                printMessage('<span style="color:#000000">Your access token '+ access_token+'. . .</span>');
+            }else{
+                printMessage('Error: Could not retrieve access token from the URL');
+                access_token = ''
+            }
+        }else{
+            printMessage('Error: There was no access token in the URL');
+        }
+        
+        
+        
         // Extract id token from the id_token parameter
         var match = url.match('id_token=([^&]*)');
         if (match) {
@@ -44,7 +62,7 @@
             // Make AWS request using the id token
             if (id_token) {
                 printMessage('<span style="color:#000000">Using id token from Salesforce to query apigateway. . .</span>');
-                makeCognitoRequest(id_token);
+                makeCognitoRequest(id_token, access_token);
             }else{
                 printMessage('Error: Could not retrieve id token from the URL');
             }
@@ -53,7 +71,7 @@
         }
     }
     // Make AWS request using Cognito
-    function makeCognitoRequest(id_token) {
+    function makeCognitoRequest(id_token, access_token) {
         var aws_region = 'us-east-1';
         var provider_url = 'login.salesforce.com'; 
         var logins = {'login.salesforce.com': id_token};
@@ -100,8 +118,8 @@
                     var apigClient = apigClientFactory.newClient({
                         // Credentials will be available when this function is called.
                         'accessKey' : AWS.config.credentials.accessKeyId,
-                         'secretKey' : AWS.config.credentials.secretAccessKey,
-                         'sessionToken': AWS.config.credentials.sessionToken
+                        'secretKey' : AWS.config.credentials.secretAccessKey,
+                        'sessionToken': AWS.config.credentials.sessionToken
                     });
                     
                     var params = {
@@ -111,7 +129,8 @@
                     };
                     var body = {
                       // This is where you define the body of the request,
-                        'id_token' : id_token
+                        'id_token' : id_token,
+                        'access_token' : access_token
                     };
                     var additionalParams = {
                       // If there are any unmodeled query parameters or headers that must be
