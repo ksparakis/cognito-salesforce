@@ -130,10 +130,12 @@
                       'uid': '34567'
                     };
                     var body = {
-                      // This is where you define the body of the request,
+                      //This is where you define the body of the request,
                         'id_token' : id_token,
-                        'access_token' : access_token
+                        'access_token' : access_token,
+                        'session_token' : AWS.config.credentials.sessionToken
                     };
+                    console.log(body)
                     var additionalParams = {
                       // If there are any unmodeled query parameters or headers that must be
                       //   sent with the request, add them here.
@@ -143,6 +145,7 @@
                       queryParams: {
                       }
                     };
+                
                     apigClient.helloworldGet(params, body, additionalParams)
                         .then(function(result){
                           // Add success callback code here.
