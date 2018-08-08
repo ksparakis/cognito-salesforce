@@ -39,7 +39,7 @@
         
         var access_token =""
         //Extract acess token
-        var match1 = url.match1('access_token=([^&]*)');
+        var match1 = url.match('access_token=([^&]*)');
         if (match1) {
             access_token = match1[1]; // String captured by ([^&]*)
             console.log(access_token)
