@@ -39,11 +39,12 @@
         
         var access_token =""
         //Extract acess token
-        var match = url.match('access_token=([^&]*)');
-        if (match) {
-            access_token = match[1]; // String captured by ([^&]*)
+        var match1 = url.match1('access_token=([^&]*)');
+        if (match1) {
+            access_token = match1[1]; // String captured by ([^&]*)
+            console.log(access_token)
             // Make AWS request using the id token
-            if (id_token) {
+            if (access_token) {
                 printMessage('<span style="color:#000000">Your access token '+ access_token+'. . .</span>');
             }else{
                 printMessage('Error: Could not retrieve access token from the URL');
@@ -51,6 +52,7 @@
             }
         }else{
             printMessage('Error: There was no access token in the URL');
+            access_token = ''
         }
         
         
